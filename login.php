@@ -1,7 +1,10 @@
 <?php
 include_once("header.php");
 ?>
-
+<style>
+    <?php include('styles/Log.css')?>
+</style>
+</head>
 <section class="parent">
     <div class="child">
         <?php

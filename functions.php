@@ -30,8 +30,8 @@ class func{
                     ){
                         return true;
                     }else{
-                        //func::createSession($_COOKIE['nombre'] ,$_COOKIE['psicologo_id'] ,$_COOKIE['token'] ,$_COOKIE['serial'] );
-                        //return true;
+                        func::createSession($_COOKIE['nombre'] ,$_COOKIE['psicologo_id'] ,$_COOKIE['token'] ,$_COOKIE['serial'] );
+                        return true;
                     }
                 }
             }
@@ -91,6 +91,35 @@ class func{
             $s=$s.$string[$r_new];
         }
         return substr(str_shuffle($string),0,$len);
+    }
+
+    public static function getEstudiantes($dbh,$psicologo_id){
+
+        $query = 'SELECT * FROM estudiantes WHERE psicologos_id = :psicologo_id ;';
+
+        $stmt = $dbh->prepare($query);
+        $stmt ->execute(array(':psicologo_id'=>$psicologo_id));
+
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        foreach($rows as $row){            
+            $id=$row['id'];
+            $nombre=$row['nombre'];
+            $edad=$row['edad'];
+            $identificacion=$row['identificacion'];
+            $telefono=$row['telefono'];
+            echo '
+                <div class="estudiantes-container">
+                    <a href="login.php">
+                     <div class="estudiante">
+                            <p><b>Nombre:</b> '.$nombre.'</br>
+                            <b>Edad:</b> '.$edad.'</br>
+                            <b>Identificacion:</b> '.$identificacion.'</br>
+                            <b>Telefono:</b> '.$telefono.'</p>
+                        </div>
+                    </a>
+                </div>
+            ';
+        }
     }
 
     
